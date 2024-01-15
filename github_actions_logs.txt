@@ -1,0 +1,17 @@
+import os
+
+file_path = "github_actions_logs.txt"
+
+# Create the file
+file = open(file_path, "w")
+
+# Write the error logs to the file
+error_logs = """
+Error log line 1
+Error log line 2
+Error log line 3
+"""
+file.write(error_logs)
+
+# Close the file
+file.close()
