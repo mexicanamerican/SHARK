@@ -1,5 +1,8 @@
 import logging
 import traceback
+import os
+import logging
+import traceback
 from apps.stable_diffusion.src import args
 from apps.stable_diffusion.scripts import (
     img2img,
@@ -30,4 +33,7 @@ if __name__ == "__main__":
     #   elif args.app == "outpaint":
     #       outpaint.main()
     else:
-        print(f"args.app value is {args.app} but this isn't supported")
+        if os.path.exists('github_actions_logs.txt'):
+            print('Error logs file exists. Please review the file for more information about the failure.')
+        else:
+            print('No error logs file found.')
