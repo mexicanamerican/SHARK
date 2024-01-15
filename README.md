@@ -365,6 +365,12 @@ For a complete list of the models supported in SHARK, please refer to [tank/READ
 </details>
 
 <details>
+
+## Troubleshooting GitHub Actions Failures
+
+GitHub Actions provide valuable CI/CD capabilities, but failures can occur. Here's how to access error logs and resolve common issues:
+
+- To access error logs, navigate to the 'Actions' tab in your GitHub repository and select the failed workflow run. The error logs will provide details about what caused the failure.
   <summary>MLIR and Torch-MLIR Project Channels</summary>
 
 * `#torch-mlir` channel on the LLVM [Discord](https://discord.gg/xS7Z362) - this is the most active communication channel
