@@ -5,7 +5,7 @@ name: Nightly Release
 
 on:
   schedule:
-    - cron: '0 5 * * *'
+    - cron: '0 0 * * 0'
   workflow_dispatch:
 
 jobs:
@@ -37,7 +37,7 @@ jobs:
       id: create_release
       uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.NODAI_INVOCATION_TOKEN }}
+        NODAI_TOKEN: ${{ secrets.NODAI_INVOCATION_TOKEN }}
       with:
         tag_name: ${{ env.tag_name }}
         release_name: nod.ai SHARK ${{ env.tag_name }}
@@ -148,6 +148,6 @@ jobs:
         # Install the built wheel
         pip install ./wheelhouse/nodai*
         # Validate the Models
-        pytest --ci --ci_sha=${SHORT_SHA} -k "not metal" |
+        pytest --ci --ci_sha=${SHORT_SHA} -k "not metal" | tail -n 1 | tee -a pytest_results.txt |
           tail -n 1 |
           tee -a pytest_results.txt
