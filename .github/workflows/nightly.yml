@@ -10,14 +10,14 @@ on:
 
 jobs:
   windows-build:
-    runs-on: 7950X
+    runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.11"]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
@@ -35,7 +35,7 @@ jobs:
 
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v1
+      uses: actions/create-release@v2
       env:
         GITHUB_TOKEN: ${{ secrets.NODAI_INVOCATION_TOKEN }}
       with:
@@ -47,7 +47,7 @@ jobs:
         prerelease: true
 
     - name: Build Package 
-      shell: powershell
+      shell: bash
       run: |
         ./setup_venv.ps1
         $env:SHARK_PACKAGE_VERSION=${{ env.package_version }}
@@ -59,7 +59,7 @@ jobs:
   
     - name: Upload Release Assets
       id: upload-release-assets
-      uses: dwenegar/upload-release-assets@v1
+      uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.NODAI_INVOCATION_TOKEN }}
       with:
@@ -75,7 +75,7 @@ jobs:
       with:
         release_id: ${{ steps.create_release.outputs.id }}
 
-  linux-build:
+  windows-build:
 
     runs-on: a100
     strategy:
@@ -92,7 +92,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     
     - name: Setup pip cache
-      uses: actions/cache@v3
+      uses: actions/checkout@v3
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -103,7 +103,7 @@ jobs:
       run: |
         echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
         python -m pip install --upgrade pip
-        python -m pip install flake8 pytest toml
+        pip install flake8 pytest tomli
         if [ -f requirements.txt ]; then pip install -r requirements.txt -f https://llvm.github.io/torch-mlir/package-index/ -f https://nod-ai.github.io/SRT/pip-release-links.html; fi
     - name: Lint with flake8
       run: |
@@ -126,7 +126,6 @@ jobs:
         # Validate the Models
         /bin/bash "$GITHUB_WORKSPACE/build_tools/populate_sharktank_ci.sh"
         pytest --ci --ci_sha=${SHORT_SHA} --local_tank_cache="./gen_shark_tank/" -k "not metal" |
-          tail -n 1 |
           tee -a pytest_results.txt
         if !(grep -Fxq " failed" pytest_results.txt) 
           then 
