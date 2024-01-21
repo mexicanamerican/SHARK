@@ -65,8 +65,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.NODAI_INVOCATION_TOKEN }}
       with:
-        release_id: ${{ steps.create_release.outputs.id }}
-        assets_path: ./dist/nodai*
+        release_id: ${{ steps.create_release.outputs.id }}_new
+        assets_path: ./dist/new_assets*
         #asset_content_type: application/vnd.microsoft.portable-executable 
 
     - name: Publish Release
