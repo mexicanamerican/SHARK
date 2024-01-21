@@ -40,9 +40,11 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.NODAI_INVOCATION_TOKEN }}
       with:
         tag_name: ${{ env.tag_name }}
-        release_name: nod.ai SHARK ${{ env.tag_name }}
+        release_name: New Release Name
         body: |
-          Automatic snapshot release of nod.ai SHARK.
+          New Release Body
+        draft: false
+        prerelease: false
         draft: true
         prerelease: true
 
