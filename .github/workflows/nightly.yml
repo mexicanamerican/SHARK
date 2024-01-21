@@ -118,10 +118,12 @@ jobs:
       continue-on-error: true
       run: |
         cd $GITHUB_WORKSPACE
-        USE_IREE=1 VENV_DIR=iree.venv ./setup_venv.sh
+        cd $GITHUB_WORKSPACE
+USE_IREE=1 VENV_DIR=iree.venv ./setup_venv.sh
         source iree.venv/bin/activate
         package_version="$(printf '%(%Y%m%d)T.${{ github.run_number }}')"
-        SHARK_PACKAGE_VERSION=${package_version} \
+        $env:SHARK_PACKAGE_VERSION=${package_version}
+        pip wheel -v -w wheelhouse . --pre -f https://download.pytorch.org/whl/nightly/torch -f https://llvm.github.io/torch-mlir/package-index/ -f https://openxla.github.io/iree/pip-release-links.html -f https://nod-ai.github.io/SRT/pip-release-links.html
         pip wheel -v -w wheelhouse . --pre -f https://download.pytorch.org/whl/nightly/torch -f https://llvm.github.io/torch-mlir/package-index/ -f https://openxla.github.io/iree/pip-release-links.html
         # Install the built wheel
         pip install ./wheelhouse/nodai*
@@ -145,7 +147,8 @@ jobs:
         ./setup_venv.sh
         source shark.venv/bin/activate
         package_version="$(printf '%(%Y%m%d)T.${{ github.run_number }}')"
-        SHARK_PACKAGE_VERSION=${package_version} \
+        $env:SHARK_PACKAGE_VERSION=${package_version}
+        pip wheel -v -w wheelhouse . --pre -f https://download.pytorch.org/whl/nightly/torch -f https://llvm.github.io/torch-mlir/package-index/ -f https://nod-ai.github.io/SRT/pip-release-links.html
         pip wheel -v -w wheelhouse . --pre -f https://download.pytorch.org/whl/nightly/torch -f https://llvm.github.io/torch-mlir/package-index/ -f https://nod-ai.github.io/SRT/pip-release-links.html
         # Install the built wheel
         pip install ./wheelhouse/nodai*
