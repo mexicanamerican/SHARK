@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.11"]
+        python-version: ["3.9"]
 
     steps:
     - uses: actions/checkout@v2
@@ -118,20 +118,20 @@ jobs:
         cd $GITHUB_WORKSPACE
         USE_IREE=1 VENV_DIR=iree.venv ./setup_venv.sh
         source iree.venv/bin/activate
-        package_version="$(printf '%(%Y%m%d)T.${{ github.run_number }}')"
+        package_version=(Get-Date -UFormat "%Y%m%d")+"."+${{ github.run_number }}
         SHARK_PACKAGE_VERSION=${package_version} \
         pip wheel -v -w wheelhouse . --pre -f https://download.pytorch.org/whl/nightly/torch -f https://llvm.github.io/torch-mlir/package-index/ -f https://openxla.github.io/iree/pip-release-links.html
         # Install the built wheel
         pip install ./wheelhouse/nodai*
         # Validate the Models
         /bin/bash "$GITHUB_WORKSPACE/build_tools/populate_sharktank_ci.sh"
-        pytest --ci --ci_sha=${SHORT_SHA} --local_tank_cache="./gen_shark_tank/" -k "not metal" |
+        pytest --ci --ci_sha=${{ github.sha }} --local_tank_cache="./gen_shark_tank/" -k "not metal" |
           tail -n 1 |
           tee -a pytest_results.txt
         if !(grep -Fxq " failed" pytest_results.txt) 
           then 
             export SHA=$(git log -1 --format='%h')
-            gsutil -m cp -r $GITHUB_WORKSPACE/gen_shark_tank/* gs://shark_tank/${DATE}_$SHA
+            gsutil -m cp -r $GITHUB_WORKSPACE/gen_shark_tank/* gs://shark_tank/${{ github.run_id }}
             gsutil -m cp -r gs://shark_tank/${DATE}_$SHA/* gs://shark_tank/nightly/
         fi
         rm -rf ./wheelhouse/nodai*
@@ -142,7 +142,7 @@ jobs:
         cd $GITHUB_WORKSPACE
         ./setup_venv.sh
         source shark.venv/bin/activate
-        package_version="$(printf '%(%Y%m%d)T.${{ github.run_number }}')"
+        package_version=(Get-Date -UFormat "%Y%m%d")+"."+${{ github.run_number }}
         SHARK_PACKAGE_VERSION=${package_version} \
         pip wheel -v -w wheelhouse . --pre -f https://download.pytorch.org/whl/nightly/torch -f https://llvm.github.io/torch-mlir/package-index/ -f https://nod-ai.github.io/SRT/pip-release-links.html
         # Install the built wheel
