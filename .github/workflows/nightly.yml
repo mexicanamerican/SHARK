@@ -106,7 +106,7 @@ jobs:
         echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest toml
-        if [ -f requirements.txt ]; then pip install -r requirements.txt -f https://llvm.github.io/torch-mlir/package-index/ -f https://nod-ai.github.io/SRT/pip-release-links.html; fi
+        if [ -f requirements.txt ]; then pip install -r requirements.txt -f https://download.pytorch.org/whl/nightly/cpu -f https://llvm.github.io/torch-mlir/package-index/ -f https://nod-ai.github.io/SRT/pip-release-links.html -f https://nod-ai.github.io/SRT/pip-release-links.html; fi
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
