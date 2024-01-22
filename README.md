@@ -23,9 +23,13 @@ Other users please ensure you have your latest vendor drivers and Vulkan SDK fro
 
 
  
-### Quick Start for SHARK Stable Diffusion for Windows 10/11 Users
+### ### ### Quick Start for SHARK Stable Diffusion for Windows 10/11 Users
 
-Install the Driver from [Prerequisites](https://github.com/nod-ai/SHARK#install-your-hardware-drivers) above 
+* Download the latest stable release of the SHARK stable diffusion application from the following link: [Stable Release](https://github.com/nod-ai/SHARK/releases/latest)
+
+* Download the latest stable release of the SHARK stable diffusion application from the following link: [Stable Release](https://github.com/nod-ai/SHARK/releases/latest)
+
+Download and install the latest driver for your Windows hardware from [here](https://www.amd.com/en/support) if you are using AMD RDNA, [here](https://sdk.lunarg.com/sdk/download/1.3.216.0/mac/vulkansdk-macos-1.3.216.0.dmg) if you are using macOS, and [here](https://developer.nvidia.com/cuda-downloads) if you are using Nvidia drivers. 
 
 Download the [stable release](https://github.com/nod-ai/shark/releases/latest)
 
