@@ -5,7 +5,7 @@
 ### Activate shark.venv Virtual Environment
 
 ```shell
-source shark.venv/bin/activate
+shark.venv\Scripts\activate
 
 # Some older pip installs may not be able to handle the recent PyTorch deps
 python -m pip install --upgrade pip
@@ -21,7 +21,7 @@ pip install accelerate transformers ftfy
 
 ### Build torch-mlir with the following branch:
 
-Please cherry-pick this branch of torch-mlir: https://github.com/vivekkhandelwal1/torch-mlir/tree/sd-ops
+To install torch-mlir, run the following command: git clone -b sd-ops https://github.com/vivekkhandelwal1/torch-mlir.git && cd torch-mlir
 and build it locally. You can find the instructions for using locally build Torch-MLIR,
 here: https://github.com/nod-ai/SHARK#how-to-use-your-locally-built-iree--torch-mlir-with-shark
 
@@ -37,7 +37,7 @@ The default number of training steps are `2000`, which would take many hours to 
 
 For example, you can run the training for a limited set of steps via the dynamo path by using the following command:
 ```
-python stable_diffusion_fine_tuning.py --training_steps=1 --inference_steps=1 --num_inference_samples=1 --train_batch_size=1 --use_torchdynamo=True
+python stable_diffusion_fine_tuning.py --steps=1 --inference_steps=1 --num_inference_samples=1 --device='cuda'
 ```
 
 You can also specify the device to be used via the flag `--device`. The default value is `cpu`, for GPU execution you can specify `--device="cuda"`.
