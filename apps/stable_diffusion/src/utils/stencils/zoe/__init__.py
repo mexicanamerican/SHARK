@@ -4,7 +4,7 @@ from pathlib import Path
 import requests
 
 
-from einops import rearrange
+from einops import rearrange, reduce, repeat
 
 remote_model_path = (
     "https://huggingface.co/lllyasviel/Annotators/resolve/main/ZoeD_M12_N.pt"
@@ -35,7 +35,7 @@ class ZoeDetector:
         model_keys = model.state_dict().keys()
         loaded_dict = torch.load(modelpath, map_location=model.device)["model"]
         loaded_keys = loaded_dict.keys()
-        for key in loaded_keys - model_keys:
+        for key in loaded_keys - set(model_keys):
             loaded_dict.pop(key)
 
         model.load_state_dict(loaded_dict)
