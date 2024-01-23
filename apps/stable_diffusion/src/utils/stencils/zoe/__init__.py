@@ -24,7 +24,7 @@ class ZoeDetector:
                 for chunk in r.iter_content(chunk_size=8192):
                     f.write(chunk)
 
-        model = torch.hub.load(
+        model = torch.hub.load('pytorch/vision','deeplabv3_resnet101', pretrained=True)(
             "monorimet/ZoeDepth:torch_update",
             "ZoeD_N",
             pretrained=False,
@@ -49,7 +49,7 @@ class ZoeDetector:
             image_depth = torch.from_numpy(image_depth).float()
             image_depth = image_depth / 255.0
             image_depth = rearrange(image_depth, "h w c -> 1 c h w")
-            depth = self.model.infer(image_depth)
+            depth = self.model(image_depth)
 
             depth = depth[0, 0].cpu().numpy()
 
