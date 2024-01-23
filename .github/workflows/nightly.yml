@@ -29,12 +29,13 @@ jobs:
     - name: Compute version
       shell: powershell
       run: |
-        $package_version = $(Get-Date -UFormat "%Y%m%d")+"."+${{ github.run_number }}
-        $package_version_ = $(Get-Date -UFormat "%Y%m%d")+"_"+${{ github.run_number }}
-        $tag_name=$package_version
-        echo "package_version=$package_version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-        echo "package_version_=$package_version_" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-        echo "tag_name=$tag_name" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+        echo 'Computing package version and setting environment variables'
+        package_version=$(date +"%Y%m%d").${{ github.run_number }}
+        package_version_=$(date +"%Y%m%d")_${{ github.run_number }}
+        tag_name=$package_version
+        echo "::set-env name=PACKAGE_VERSION::$package_version"
+        echo "::set-env name=PACKAGE_VERSION_::$package_version_"
+        echo "::set-env name=TAG_NAME::$tag_name"
 
     - name: Create Release
       id: create_release
