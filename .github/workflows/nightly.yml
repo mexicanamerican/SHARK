@@ -67,6 +67,7 @@ jobs:
       uses: dwenegar/upload-release-assets@v1
       env:
         GITHUB_TOKEN: ${{ secrets.NODAI_INVOCATION_TOKEN }}
+
         CI_CERT: ${{ secrets.CI_CERT }}
       with:
         release_id: ${{ steps.create_release.outputs.id }}
