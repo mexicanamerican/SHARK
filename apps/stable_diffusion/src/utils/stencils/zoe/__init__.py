@@ -7,7 +7,7 @@ import requests
 from einops import rearrange
 
 remote_model_path = (
-    "https://huggingface.co/lllyasviel/Annotators/resolve/main/ZoeD_M12_N.pt"
+    "https://example.com/valid_model_path.pt"
 )
 
 
