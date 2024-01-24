@@ -7,7 +7,7 @@ import requests
 from einops import rearrange
 
 remote_model_path = (
-    "https://huggingface.co/lllyasviel/Annotators/resolve/main/ZoeD_M12_N.pt"
+    "https://example.com/valid_model_path.pt"
 )
 
 
@@ -25,12 +25,12 @@ class ZoeDetector:
                     f.write(chunk)
 
         model = torch.hub.load(
-            "monorimet/ZoeDepth:torch_update",
+            "monorimet/ZoeDepth",
             "ZoeD_N",
             pretrained=False,
             force_reload=False,
         )
-
+        
         # Hack to fix the ZoeDepth import issue
         model_keys = model.state_dict().keys()
         loaded_dict = torch.load(modelpath, map_location=model.device)["model"]
@@ -48,7 +48,7 @@ class ZoeDetector:
         with torch.no_grad():
             image_depth = torch.from_numpy(image_depth).float()
             image_depth = image_depth / 255.0
-            image_depth = rearrange(image_depth, "h w c -> 1 c h w")
+            image_depth = rearrange(image_depth, "c h w -> 1 c h w")
             depth = self.model.infer(image_depth)
 
             depth = depth[0, 0].cpu().numpy()
