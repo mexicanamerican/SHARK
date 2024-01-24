@@ -25,12 +25,12 @@ class ZoeDetector:
                     f.write(chunk)
 
         model = torch.hub.load(
-            "monorimet/ZoeDepth:torch_update",
+            "monorimet/ZoeDepth",
             "ZoeD_N",
             pretrained=False,
             force_reload=False,
         )
-
+        
         # Hack to fix the ZoeDepth import issue
         model_keys = model.state_dict().keys()
         loaded_dict = torch.load(modelpath, map_location=model.device)["model"]
