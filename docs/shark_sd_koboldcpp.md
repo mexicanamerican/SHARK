@@ -92,17 +92,19 @@ SHARK should start in server mode, and you should see something like this:
 
 ## Connecting to SHARK on a different address or port
 
+[//]: # (Updated instructions for changing the url and port in Koboldcpp)
+
 If you didn't set the port to `--server_port=7860` when starting SHARK, or you are running it on different machine on your network than you are running Koboldcpp, or to where you are running the koboldcpp's kdlite client frontend, then you very likely got the following error:
 
   ![Can't find the A1111 endpoint error](https://user-images.githubusercontent.com/121311569/280555857-601f53dc-35e9-4027-9180-baa61d2393ba.png)
 
 As long as SHARK is running correctly, this means you need to set the url and port to the correct values in Koboldcpp. For instance. to set the port that Koboldcpp looks for an image generator to SHARK's default port of 8080:
 
-* Select the cog icon the Generate Images section of Advanced settings:
+* Open the Settings dialog in Koboldcpp and follow these steps to update the URL and port:
 
      ![Selecting the endpoint cog](https://user-images.githubusercontent.com/121311569/280555866-4287ecc5-f29f-4c03-8f5a-abeaf31b0442.png)
 
-* Then edit the port number at the end of the url in the 'A1111 Endpoint Selection' dialog box to read 8080:
+* Then edit the port number at the end of the url in the 'A1111 Endpoint Selection' dialog box to set the desired port number:
 
      ![Changing the endpoint port](https://user-images.githubusercontent.com/121311569/280556170-f8848b7b-6fc9-4cf7-80eb-5c312f332fd9.png)
 
