@@ -2,8 +2,8 @@ from apps.stable_diffusion.src import args
 from apps.stable_diffusion.scripts import (
     img2img,
     txt2img,
-    #    inpaint,
-    #    outpaint,
+        #   inpaint,
+        #   outpaint,
 )
 
 if __name__ == "__main__":
