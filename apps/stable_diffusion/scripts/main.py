@@ -11,9 +11,9 @@ if __name__ == "__main__":
         txt2img.main()
     elif args.app == "img2img":
         img2img.main()
-    #   elif args.app == "inpaint":
-    #       inpaint.main()
-    #   elif args.app == "outpaint":
-    #       outpaint.main()
+    elif args.app == "inpaint":
+        inpaint.main()
+    elif args.app == "outpaint":
+        outpaint.main()
     else:
         print(f"args.app value is {args.app} but this isn't supported")
