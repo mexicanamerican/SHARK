@@ -20,6 +20,7 @@ p.add_argument(
     default="Hello, my dog is cute",
     help="the text prompt to use",
 )
+# Add comment to describe the device argument
 p.add_argument("--device", type=str, default="cpu", help="the device to use")
 p.add_argument("--seed", type=int, default=0, help="the random seed")
 p.add_argument(
@@ -51,7 +52,7 @@ class HuggingFaceLanguage(torch.nn.Module):
 model = HuggingFaceLanguage()
 actual_out = model(test_input)
 
-# import numpy as np
+# Add comment to describe importing numpy
 # test_input_ny = test_input.detach().numpy()
 # input_tuple = (test_input_ny,)
 # np.savez('inputs.npz', *input_tuple)
