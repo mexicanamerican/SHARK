@@ -1,7 +1,34 @@
 # SHARK C/C++ Samples
 
 These C/C++ samples can be built using CMake. The samples depend on the main
-SHARK-Runtime project's C/C++ sources, including both the runtime and the compiler. 
+SHARK-Runtime project's C/C++ sources, including both the runtime and the compiler. **To build the C/C++ samples, follow the steps below:**
+
+1. Install and activate SHARK
+```bash
+source shark.venv/bin/activate #follow main repo instructions to setup your venv
+```
+2. Install Dependencies
+```bash
+vcpkg install [library] --triplet [your platform]
+vcpkg integrate install
+# Then pass `-DCMAKE_TOOLCHAIN_FILE=[check logs for path]` when configuring CMake
+```^vcpkg integration requires vcpkg to be installed and some library's configuration to be identified.
+3. *Build the C/C++ samples*
+```bash
+cd cpp
+cmake -GNinja -B build/
+cmake --build build/
+```^This builds the C/C++ samples using CMake and generates the necessary build artifacts.
+4. *Prepare the model for vulkan_gui sample*
+```bash
+wget https://storage.googleapis.com/shark_tank/latest/resnet50_tf/resnet50_tf.mlir
+iree-compile --iree-input-type=auto --iree-vm-bytecode-module-output-format=flatbuffer-binary --iree-hal-target-backends=vulkan --iree-llvmcpu-embedded-linker-path=`python3 -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])'`/iree/compiler/tools/../_mlir_libs/iree-lld --mlir-print-debuginfo --mlir-print-op-on-diagnostic=false --mlir-pass-pipeline-crash-reproducer=ist/core-reproducer.mlir --iree-llvmcpu-target-cpu-features=host -iree-vulkan-target-triple=rdna2-unknown-linux  resnet50_tf.mlir -o resnet50_tf.vmfb
+```^This prepares the model required for the vulkan_gui sample.
+5. *Prepare the input*^Prepares the input data required for the vulkan_gui sample.
+6. *Run the vulkan_gui sample*
+```bash
+./build/vulkan_gui/iree-samples-resnet-vulkan-gui
+```^Executes the vulkan_gui sample. Replace `iree-samples-resnet-vulkan-gui` with the name of the sample if necessary. 
 
 Individual samples may require additional dependencies. Watch CMake's output
 for information about which you are missing for individual samples.
